@@ -81,7 +81,7 @@ def submit_worklogs(issue, time_logs, client):
 
     for date_string, hours in time_logs.items():
         log_date = datetime.strptime(date_string, "%Y-%m-%d").replace(hour=12, tzinfo=pytz.utc)
-        log_date_string = log_date.strftime("%Y-%m-%dT%12:00:00.000%z")
+        log_date_string = log_date.strftime("%Y-%m-%dT12:00:00.000%z")
         time_in_seconds = hours * 60 * 60
         payload = json.dumps(
             {
