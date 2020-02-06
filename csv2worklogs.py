@@ -72,6 +72,7 @@ def read_csv(filepath):
         reader = csv.DictReader(csvfile)
         for row in reader:
             issue = row.pop("Issue")
+            row.pop("Notes", None)
             issue_logs[issue] = {date.strip(): float(hours.strip()) for date, hours in row.items() if hours}
     return issue_logs
 
