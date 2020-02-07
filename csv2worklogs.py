@@ -104,7 +104,7 @@ def submit_worklogs(issue, time_logs, client):
                 continue
             else:
                 response = client.update_worklog(issue, matching_worklog_id, payload)
-                success_message = Fore.YELLOW + f"Existing worklog found and updated for issue {issue}, start {date_string}"
+                success_message = Fore.YELLOW + f"Existing worklog found and updated for issue {issue}, date {date_string}"
         else:
             response = client.create_worklog(issue, payload)
             success_message = Fore.GREEN + f"New worklog created for issue {issue}, date {date_string}"
