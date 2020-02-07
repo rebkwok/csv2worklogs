@@ -26,11 +26,13 @@ pip install -r requirements.txt
  - "Notes" column is optional and will be ignored (for reminders, description of issues etc)
  - Other column headers are dates, in the format YYYY-MM-DD
  - Enter time in hours.
+ - Any rows with an empty Issue field are ignored (e.g. the days of the week row in the table below is ignored).
  
  E.g.
 
 | Issue   | Notes   | 2020-02-03 | 2020-02-04 | 2020-02-05 | 2020-02-06 |
 |---------|:-------:|:----------:|:----------:|:----------:|:----------:|
+|         |         |    Mon     |    Tues    |    Wed     |    Thurs   |
 | ISSUE-1 |         |      1     |     0.5    |      8     |            |
 | ISSUE-2 |         |      2     |      7     |            |      8     |
 | ISSUE-3 |         |      6     |     0.5    |            |            |
