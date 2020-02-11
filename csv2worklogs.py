@@ -65,6 +65,9 @@ class JiraApiClient:
     def update_worklog(self, issue, worklog_id, payload):
         return requests.put(self._worklog_url(issue, worklog_id), data=payload, headers=self.headers, auth=self.auth)
 
+    def delete_worklog(self, issue, worklog_id):
+        return requests.delete(self._worklog_url(issue, worklog_id), headers=self.headers, auth=self.auth)
+
 
 def read_csv(filepath):
     issue_logs = {}
@@ -102,14 +105,20 @@ def submit_worklogs(issue, time_logs, client):
             if matching_worklog["time_in_seconds"] == time_in_seconds:
                 logger.info(Fore.BLUE + "No change to existing worklog for issue %s, date %s", issue, date_string)
                 continue
+            elif time_in_seconds == 0:
+                response = client.delete_worklog(issue, matching_worklog_id)
+                success_message = Fore.MAGENTA + f"Existing worklog found and deleted for issue {issue}, date {date_string}"
             else:
                 response = client.update_worklog(issue, matching_worklog_id, payload)
                 success_message = Fore.YELLOW + f"Existing worklog found and updated for issue {issue}, date {date_string}"
+        elif time_in_seconds == 0:
+            logger.info(Fore.BLUE + "Time is 0, no worklog created for issue %s, date %s", issue, date_string)
+            continue
         else:
             response = client.create_worklog(issue, payload)
             success_message = Fore.GREEN + f"New worklog created for issue {issue}, date {date_string}"
 
-        if response.status_code in [200, 201]:
+        if response.status_code in [200, 201, 204]:
             logger.info(success_message)
         else:
             logger.error(Fore.RED + "Error logging time for issue %s, date %s: %s", issue, date_string, response.status_code)

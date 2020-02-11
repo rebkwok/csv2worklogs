@@ -27,6 +27,7 @@ pip install -r requirements.txt
  - Other column headers are dates, in the format YYYY-MM-DD
  - Enter time in hours.
  - Any rows with an empty Issue field are ignored (e.g. the days of the week row in the table below is ignored).
+ - To delete all time for a particular day/issue, enter 0 hours
  
  E.g.
 
