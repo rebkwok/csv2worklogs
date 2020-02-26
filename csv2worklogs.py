@@ -141,7 +141,8 @@ def main(filepath):
     base_url = environ.get("JIRA_BASE_URL")
 
     if not (email and api_token and base_url):
-        logging.error("Set the JIRA_EMAIL, JIRA_API_TOKEN and JIRA_BASE_URL environment variables")
+        missing = [var for var in ["JIRA_EMAIL", "JIRA_API_TOKEN", "JIRA_BASE_URL"] if environ.get(var) is None]
+        logging.error("Missing environment variable(s): %s", ", ".join(missing))
         return
 
     issue_logs = read_csv(filepath)
